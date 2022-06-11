@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lyg.mybatisdemo.dao.mapper.UserMapper">
+    <update id="insert" >
+        insert into user values(5,"haha",15,"127","男","555")
+    </update>
+    <insert id="update" >
+        update user set username="hi" where id=4
+    </insert>
+    <insert id="add">
+        insert into user values (null,#{username},#{password},#{age},#{sex},#{email})
+    </insert>
+    <delete id="delete" >
+        delete from user where id=4
+    </delete>
+
+    <select id="check" resultType="com.lyg.mybatisdemo.dao.pojo.User">
+        select * from user where id=3
+    </select>
+    <select id="checkAll" resultType="com.lyg.mybatisdemo.dao.pojo.User">
+        select * from user
+    </select>
+    <select id="getUserByUsername" resultType="com.lyg.mybatisdemo.dao.pojo.User">
+        select * from user where username=#{username}
+    </select>
+    <select id="checkLogin" resultType="com.lyg.mybatisdemo.dao.pojo.User">
+        select * from user where username=#{username} and password =#{password}
+    </select>
+    <select id="checkLoginMap" resultType="com.lyg.mybatisdemo.dao.pojo.User">
+        select * from user where username=#{username} and password=#{password}
+    </select>
+    <select id="getUserByLike" resultType="com.lyg.mybatisdemo.dao.pojo.User">
+        select * from user where password like "%"#{123}"%"
+    </select>
+
+
+
+    <!--    <select id="selectBlog" resultType="Blog">-->
+<!--        select * from Blog where id = #{id}-->
+<!--    </select>-->
+</mapper>

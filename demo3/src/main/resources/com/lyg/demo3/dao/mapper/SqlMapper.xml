@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lyg.demo3.dao.mapper.SqlMapper">
+
+    <!--    int addMoreByArray(List<User> users);-->
+    <insert id="addMoreByArray">
+        insert into user values
+        <foreach collection="users" item="user" separator=",">
+          (null,#{user.username},null,#{user.age},#{user.sex},#{user.email})
+        </foreach>
+    </insert>
+
+    <!--    int deleteMoreByArray(@Param("id") Integer id);-->
+    <delete id="deleteMoreByArray">
+        delete from user where id in
+        <foreach collection="ids" item="id" separator="," open="(" close= ")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <sql id="usercolumns">id,username,age</sql>
+
+<!--    List<User> selectByUser2(User user);-->
+    <select id="selectByUser" resultType="com.lyg.demo3.dao.pojo.User">
+        select * from user where
+        <if test="username != null and username!=''">
+            username=#{username}
+        </if>
+        <if test="age != null and age!=''">
+            and age=#{age}
+        </if>
+        <if test="sex != null and sex!=''">
+            and sex=#{sex}
+        </if>
+        <if test="email != null and email!=''">
+            and email=#{email}
+        </if>
+    </select>
+    <select id="selectByUser2" resultType="com.lyg.demo3.dao.pojo.User">
+        select * from user where
+        <trim prefix="where" suffixOverrides="and|or">
+            <if test="username != null and username!=''">
+                username=#{username} and
+            </if>
+            <if test="age != null and age!=''">
+                age=#{age} and
+            </if>
+            <if test="sex != null and sex!=''">
+                and sex=#{sex} or
+            </if>
+            <if test="email != null and email!=''">
+                email=#{email}
+            </if>
+        </trim>
+    </select>
+    <select id="selectParam" resultType="com.lyg.demo3.dao.pojo.User">
+        select <include refid="usercolumns"></include> from user
+    </select>
+</mapper>

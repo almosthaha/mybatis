@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lyg.demo3.dao.mapper.UserMapper">
+
+    <resultMap id="userResultType2" type="com.lyg.demo3.dao.pojo.User">
+        <id property="id" column="id"></id>
+        <result property="username" column="username"></result>
+        <result property="password" column="password"></result>
+        <result property="age" column="age"></result>
+        <result property="sex" column="sex"></result>
+        <result property="email" column="email"></result>
+        <result property="department.departmentid" column="departmentid"></result>
+        <result property="department.departmentname" column="departmentname"></result>
+
+
+<!--        <association property="department" javaType="com.lyg.demo3.dao.pojo.Department">-->
+<!--            <id property="departmentid" column="departmentid"></id>-->
+<!--            <result property="departmentname" column="departmentname"></result>-->
+<!--        </association>-->
+
+    </resultMap>
+    <select id="getUserAndDepartment" resultMap="userResultType2">
+        select * from user left join department on user.id = department.departmentid
+        where id=#{id}
+    </select>
+    <select id="getUserCondition" resultType="com.lyg.demo3.dao.pojo.User">
+        select * from user
+        <where>
+            <if test="username != null and username!=''">
+                username=#{username}
+            </if>
+            <if test="age != null and age!=''">
+                and age=#{age}
+            </if>
+            <if test="sex != null and sex!=''">
+                and sex=#{sex}
+            </if>
+            <if test="email != null and email!=''">
+                and email=#{email}
+            </if>
+        </where>
+    </select>
+</mapper>

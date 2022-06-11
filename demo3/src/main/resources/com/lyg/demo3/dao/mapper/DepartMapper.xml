@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lyg.demo3.dao.mapper.DepartMapper">
+
+    <resultMap id="depResultMap" type="com.lyg.demo3.dao.pojo.Department">
+        <id property="departmentid" column="departmentid"></id>
+        <result property="departmentname" column="departmentname"></result>
+        <collection property="users" ofType="com.lyg.demo3.dao.pojo.User">
+            <id property="id" column="id"></id>
+            <result property="username" column="username"></result>
+            <result property="password" column="password"></result>
+            <result property="age" column="age"></result>
+            <result property="sex" column="sex"></result>
+            <result property="email" column="email"></result>
+        </collection>
+    </resultMap>
+<!--    List<Department> getDepartmentByAll();-->
+    <select id="getDepartmentByAll" resultType="com.lyg.demo3.dao.pojo.Department">
+        select * from department where departmentid = #{departmentid}
+    </select>
+    <select id="getDepartmentByStepOne" resultMap="depResultMap">
+        select * from department left join user on department.departmentid=user.id
+        where departmentId=#{departmentid}
+    </select>
+
+</mapper>

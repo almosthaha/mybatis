@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lyg.demo2.dao.mapper.SqlMapper">
+
+<!--    void insertUser(@Param("user") User user);-->
+    <insert id="insertUser" useGeneratedKeys="true" keyProperty="id">
+        insert into user values (null,#{username},#{password},#{age},#{sex},#{email})
+    </insert>
+
+    <!--    int deleteMore(String ids);  in 表示在什么范围内-->
+    <delete id="deleteMore">
+        delete from user where id in (${ids})
+    </delete>
+
+    <!--    select * from user where username like '%#{username}%' 解析成字符串-->
+    <select id="getUserByLike" resultType="com.lyg.demo2.dao.pojo.User">
+         select * from user where username like "%"#{username}"%"
+    </select>
+    <select id="getUserByTableName" resultType="com.lyg.demo2.dao.pojo.User">
+        select * from ${tableName}
+    </select>
+</mapper>

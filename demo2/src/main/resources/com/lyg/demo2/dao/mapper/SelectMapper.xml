@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lyg.demo2.dao.mapper.SelectMapper">
+
+<!--    User getUserById(@Param("id") Integer id);-->
+    <select id="getUserById" resultType="com.lyg.demo2.dao.pojo.User">
+        select * from user where id=#{id}
+    </select>
+
+<!--    List<User> getUserAll();-->
+    <select id="getUserAll" resultType="com.lyg.demo2.dao.pojo.User">
+        select * from user
+    </select>
+
+<!--    Integer getcount();-->
+    <select id="getcount" resultType="java.lang.Integer">
+-- int默认为0，integer默认为null,所以interger只要不是null,就有数据
+-- count(*)跟count(1)的查询结果为一样
+        select count(*) from user
+    </select>
+    <select id="getUserByIdMap" resultType="java.util.Map">
+        select * from user where id=#{id}
+    </select>
+
+    <select id="getAllUserToMap" resultType="java.util.Map">
+        select * from user
+    </select>
+
+    <!--    Map<String,Object> getUserByIdToMap(@Param("id") Integer id);-->
+<!--    <select id="getUserByIdToMap" resultType="java.util.Map">-->
+<!--        select * from user where id=#{id}-->
+<!--    </select>-->
+
+</mapper>
